@@ -5,6 +5,7 @@ export default {
     return {
       message: "Paper Towns",
       places: [],
+      place: {},
       editPlaceParams: {},
       newPlaceParams: {},
       showErrorMessage: false,
@@ -42,7 +43,7 @@ export default {
         .then((this.showErrorMessage = true));
     },
 
-    updatePlace: function () {
+    updatePlace: function (place) {
       axios
         .patch("http://localhost:3000/places" + place.id, this.editPlaceParams)
         .then((response) => {
@@ -61,3 +62,46 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div class="home">
+    <h1>{{ message }}</h1>
+    <h3>Add New Place</h3>
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" v-model="newPlaceParams.name" id="name" placeholder="name" />
+    </div>
+    <div>
+      <label for="address">Address:</label>
+      <input type="text" v-model="newPlaceParams.address" id="address" placeholder="address" />
+    </div>
+    <div>
+      <button v-on:click="createPlace()">Create</button>
+    </div>
+    <div v-for="place in places" v-bind:key="place.id">
+      <h5>{{ place.name }}</h5>
+      <h6>{{ place.price }}</h6>
+      <div>
+        <button v-on:click="showPlace(place)">More Info!</button>
+      </div>
+      <hr />
+    </div>
+    <dialog id="place-details">
+      <form method="dialog">
+        <div>
+          <label for="editName">Name:</label>
+          <input type="text" v-model="editPlaceParams.name" id="editName" />
+        </div>
+        <br />
+        <div>
+          <label for="editAddress">Address:</label>
+          <input type="text" v-model="editPlaceParams.address" id="editAddress" />
+        </div>
+        <br />
+        <button v-on:click="updatePlace(currentPlace)">Update Place</button>
+        <button>Close</button>
+        <button v-on:click="destroyPlace(currentPlace)">Destroy Place</button>
+      </form>
+    </dialog>
+  </div>
+</template>
