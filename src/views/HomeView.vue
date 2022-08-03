@@ -9,7 +9,6 @@ export default {
       newPlaceParams: {},
       showErrorMessage: false,
       errorMessage: "",
-      
     };
   },
 
@@ -23,31 +22,42 @@ export default {
         console.log("All Phantom Towns", this.places);
       });
     },
-      showPlace: function (place) {
+    showPlace: function (place) {
       console.log(place);
       document.querySelector("#place-details").showModal();
       this.currentPlace = place;
       this.editPlaceParams = place;
-      },
-        
-        createPlace: function () {
+    },
+
+    createPlace: function () {
       axios
         .post("http://localhost:3000/places", this.newPlaceParams)
         .then((response) => {
           console.log("Paper Town created", response.data);
           this.places.push(response.data);
-          this.newPlaceParams = {}; 
+          this.newPlaceParams = {};
           this.showErrorMessage = false;
         })
         .catch((error) => (this.errorMessage = error))
         .then((this.showErrorMessage = true));
-        },
-        
-        updatePlace: function () {
-          axios
-          .patch("http://localhost:3000/places" + place.id, this.editPlaceParams)
-          .then((response) => {console.log("Updated that which is not there", response.data);
-          })
-          .catch((error) => (this.errorMessage = error))
-          .then((this.showErrorMessage = true));
-        },
+    },
+
+    updatePlace: function () {
+      axios
+        .patch("http://localhost:3000/places" + place.id, this.editPlaceParams)
+        .then((response) => {
+          console.log("Updated that which is not there", response.data);
+        })
+        .catch((error) => (this.errorMessage = error))
+        .then((this.showErrorMessage = true));
+    },
+    destroyPlace: function (place) {
+      axios.delete("http://localhost:3000/places" + place.id).then((response) => {
+        console.log("Removed that which is not there", response.data);
+        var index = this.places.indexOf(place);
+        this.places.splice(index, 1);
+      });
+    },
+  },
+};
+</script>
