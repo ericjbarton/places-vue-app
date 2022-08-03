@@ -23,6 +23,13 @@ export default {
         console.log("All Phantom Towns", this.places);
       });
     },
+      showPlace: function (place) {
+      console.log(place);
+      document.querySelector("#place-details").showModal();
+      this.currentPlace = place;
+      this.editPlaceParams = place;
+      },
+        
         createPlace: function () {
       axios
         .post("http://localhost:3000/places", this.newPlaceParams)
@@ -34,3 +41,9 @@ export default {
         })
         .catch((error) => (this.errorMessage = error))
         .then((this.showErrorMessage = true));
+        },
+        
+        updatePlace: function () {
+          axios
+          .patch("http://localhost:3000/places" + place.id)
+        }
