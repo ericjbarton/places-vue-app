@@ -45,5 +45,9 @@ export default {
         
         updatePlace: function () {
           axios
-          .patch("http://localhost:3000/places" + place.id)
-        }
+          .patch("http://localhost:3000/places" + place.id, this.editPlaceParams)
+          .then((response) => {console.log("Updated that which is not there", response.data);
+          })
+          .catch((error) => (this.errorMessage = error))
+          .then((this.showErrorMessage = true));
+        },
