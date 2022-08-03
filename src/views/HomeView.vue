@@ -3,9 +3,12 @@ import axios from "axios";
 export default {
   data: function () {
     return {
+      message: "Paper Towns",
       places: [],
       editPlaceParams: {},
       newPlaceParams: {},
+      showErrorMessage: false,
+      errorMessage: "",
       
     };
   },
@@ -24,8 +27,10 @@ export default {
       axios
         .post("http://localhost:3000/places", this.newPlaceParams)
         .then((response) => {
-          console.log("Place created ", response.data);
+          console.log("Paper Town created", response.data);
           this.places.push(response.data);
-          this.newPlaceParams = {};
+          this.newPlaceParams = {}; 
           this.showErrorMessage = false;
-        
+        })
+        .catch((error) => (this.errorMessage = error))
+        .then((this.showErrorMessage = true));
