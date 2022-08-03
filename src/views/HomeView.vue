@@ -34,7 +34,7 @@ export default {
       axios
         .post("http://localhost:3000/places", this.newPlaceParams)
         .then((response) => {
-          console.log("Paper Town created", response.data);
+          console.log("Paper Town crea  ted", response.data);
           this.places.push(response.data);
           this.newPlaceParams = {};
           this.showErrorMessage = false;
